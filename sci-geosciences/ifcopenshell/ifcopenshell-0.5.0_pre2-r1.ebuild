@@ -3,13 +3,13 @@
 
 EAPI=5
 
-inherit git-r3 cmake-utils
+inherit multilib git-r3 cmake-utils
 
 DESCRIPTION="IfcOpenShell is an open source (LGPL) software library that helps users and software developers to work with the IFC file format."
 HOMEPAGE="http://ifcopenshell.sourceforge.net"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/IfcOpenShell/IfcOpenShell.git"
-EGIT_COMMIT="v${PVR/_pre/-preview}"
+EGIT_COMMIT="v${PV/_pre/-preview}"
 
 LICENSE="LGPL"
 SLOT="0"
@@ -26,9 +26,6 @@ CMAKE_USE_DIR="${S}/cmake"
 CMAKE_MIN_VERSION="2.8.5"
 
 src_configure() {
-	default
-}
-src_configure() {
 	local mycmakeargs=(
 		$(cmake-utils_use_with openconnect)
 		$(cmake-utils_use unicode UNICODE_SUPPORT)
@@ -39,6 +36,7 @@ src_configure() {
 		-DBUILD_EXAMPLES=OFF
 		-DOCC_INCLUDE_DIR=$CASROOT/inc
 		-DOCC_LIBRARY_DIR=$CASROOT/lib
+		-DLIBDIR=$(get_libdir)
 	)
 
 	cmake-utils_src_configure

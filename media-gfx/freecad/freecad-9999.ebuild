@@ -20,7 +20,7 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="qt5 external-smesh"
+IUSE="qt5 external-smesh debug"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 #dev-qt/qtgui:4[-egl] and dev-qt/qtopengl:4[-egl] : Bug 564978
@@ -108,6 +108,7 @@ src_configure() {
 		-DFREECAD_USE_EXTERNAL_KDL="ON"
 	)
 	use qt5 && mycmakeargs+=("-DBUILD_QT5=ON")
+	use debug && mycmakeargs+=("-DCMAKE_BUILD_TYPE=Debug")
 
 	# TODO to remove embedded dependencies:
 	#
